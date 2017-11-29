@@ -14,6 +14,7 @@ public class FireRateUp : MonoBehaviour {
     }
 
     // Update is called once per frame
+    //Destroys the upgrade when the game is not in the upgrade phase.
     void Update()
     {
         if (!phaseController.GetComponent<PhaseController>().upgradePhase)
@@ -22,6 +23,7 @@ public class FireRateUp : MonoBehaviour {
         }
     }
 
+    //Allowes the player to pick up the upgrade and gain its effect.
     private void OnTriggerStay2D(Collider2D collision)
     {
 

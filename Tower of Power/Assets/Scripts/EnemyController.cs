@@ -22,6 +22,7 @@ public class EnemyController : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
+    //This function causes the enemy to flash red whenever he get hit by a fireball.
 	void Update () {
         if (hit)
         {
@@ -38,6 +39,7 @@ public class EnemyController : MonoBehaviour {
         }
 	}
 
+    //Damages the player whenever the enemy collides with him.
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.transform.tag == "Player")

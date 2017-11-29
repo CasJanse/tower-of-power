@@ -17,12 +17,13 @@ public class DropGooPatch : MonoBehaviour {
 		
 	}
 
+    //Drops a goo patch on the ground.
     public void DropGoo() {
         gooInstance = Instantiate(gooPatch, transform);
-        //gooInstance.transform.localScale = new Vector3(6, 6, 1);
         gooInstance.transform.SetParent(null);
     }
 
+    //Destroys the goo patch in the upgrade phase if it is over an upgrade.
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Upgrade")

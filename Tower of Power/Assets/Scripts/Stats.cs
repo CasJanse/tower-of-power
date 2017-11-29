@@ -19,7 +19,7 @@ public class Stats : MonoBehaviour {
 	void Update () {
         if (HP <=0)
         {
-            if (name == "Orc(Clone)")
+            if (name == "Enemy_Orc(Clone)")
             {
                 GetComponent<DropGooPatch>().DropGoo();
             }

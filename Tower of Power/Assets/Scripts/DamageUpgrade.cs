@@ -15,6 +15,7 @@ public class DamageUpgrade : MonoBehaviour
     }
 
     // Update is called once per frame
+    //This function deletes the upgrade if the game shifts to the fighting phase.
     void Update()
     {
         if (!phaseController.GetComponent<PhaseController>().upgradePhase)
@@ -23,6 +24,7 @@ public class DamageUpgrade : MonoBehaviour
         }
     }
 
+    //Adds the damage upgrade when the player picks it up.
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "Player" && Input.GetKeyDown(KeyCode.E))

@@ -9,28 +9,20 @@ public class EnemyChasing : MonoBehaviour {
     private Vector2 moveDirection;
     private GameObject target;
     public bool attacking;
+    private float attackDistance;
     public int movementSpeed;
-    public bool hasTarget;
 
     // Use this for initialization
     void Start () {
-		
+        attackDistance = 1;
 	}
 	
 	// Update is called once per frame
+    //Moves the enemy towards the player.
 	void Update () {
-
-        if (hasTarget)
-        {
-            if (target.tag == "Soldier")
-            {
-                currentTarget = target.transform.position;
-            }
-        }
-        else
-        {
-            currentTarget = player.transform.position;
-        }
+        
+        currentTarget = player.transform.position;
+        
 
 
         moveDirection = (currentTarget - transform.position).normalized;
@@ -45,7 +37,8 @@ public class EnemyChasing : MonoBehaviour {
             GetComponent<SpriteRenderer>().flipX = false;
         }
 
-        if (Vector2.Distance(currentTarget, transform.position) <= 1)
+        //Attack the player if he is close enough.
+        if (Vector2.Distance(currentTarget, transform.position) <= attackDistance)
         {
             attacking = true;
         }
