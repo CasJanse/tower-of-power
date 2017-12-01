@@ -5,23 +5,15 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
-    public float speedMultiplier;
-    public float defaultHP;
-    public float defaultMP;
-    public float cooldownTimer;
+    public float speedMultiplier, range, damageModifier, fireRate, scaleModifier;
+    private float defaultHP, defaultMP, cooldownTimer, invulnerabilityTimer, currentInvulnerabilityTimer;
     public Text cooldownText;
     public GameObject fireBlast;
     public Canvas canvas;
     public Stats statScript;
     public GameObject fireBlastInstance;
-    public float invulnerabilityTimer;
-    public float currentInvulnerabilityTimer;
-    public float fireRate;
-    public float scaleModifier;
-    public float damageModifier;
     public bool hit;
     public bool cooldown;
-    public float range;
     public AudioClip hitSound;
     private AudioSource source;
 
@@ -43,10 +35,12 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+        //Input
         float inputX = Input.GetAxis("Horizontal") * Time.deltaTime * speedMultiplier;
         float inputY = Input.GetAxis("Vertical") * Time.deltaTime * speedMultiplier;
         transform.Translate(new Vector3(inputX, inputY, 0));
 
+        //Swap sprite to face movement direction
         if (inputX < 0)
         {
             GetComponent<SpriteRenderer>().flipX = true;
@@ -56,6 +50,7 @@ public class PlayerController : MonoBehaviour {
             GetComponent<SpriteRenderer>().flipX = false;
         }
 
+        //Cooldown for being invulnerable
         if (cooldownTimer > 0)
         {
             cooldown = false;
@@ -67,6 +62,7 @@ public class PlayerController : MonoBehaviour {
             cooldownTimer = 0;
         }
 
+        //Shoot fireball
         if (Input.GetMouseButton(0) && cooldownTimer <= 0)
         {
             SpawnControlBlast((Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized);
@@ -82,6 +78,7 @@ public class PlayerController : MonoBehaviour {
 
         currentInvulnerabilityTimer -= 1 * Time.deltaTime;
 
+        //Blink when hit
         if (hit)
         {
             GetComponent<Blinking>().Blink(invulnerabilityTimer);
@@ -89,6 +86,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    //Spawn a fireball instance
     void SpawnControlBlast(Vector2 blastDirection)
     {
         fireBlastInstance = Instantiate(fireBlast, transform);
@@ -103,6 +101,7 @@ public class PlayerController : MonoBehaviour {
         cooldown = true;
     }
 
+    //Let the player take damage and become invulnerable
     public void TakeDamage(float damage) {
         
         if (currentInvulnerabilityTimer <= 0)

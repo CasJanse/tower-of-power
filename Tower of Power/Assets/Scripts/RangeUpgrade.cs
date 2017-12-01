@@ -23,6 +23,7 @@ public class RangeUpgrade : MonoBehaviour
         }
     }
 
+    //Allows the player to pick up the upgrade and increases the range of fireballs.
     private void OnTriggerStay2D(Collider2D collision)
     {
 

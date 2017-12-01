@@ -6,7 +6,7 @@ using UnityEngine;
 public class HPUpgrade : MonoBehaviour
 {
 
-    public GameObject phaseController;
+    private GameObject phaseController;
 
     // Use this for initialization
     void Start()
@@ -15,6 +15,7 @@ public class HPUpgrade : MonoBehaviour
     }
 
     // Update is called once per frame
+    //Removes the upgrade when the ugrade phase is over.
     void Update()
     {
         if (!phaseController.GetComponent<PhaseController>().upgradePhase)
@@ -23,6 +24,7 @@ public class HPUpgrade : MonoBehaviour
         }
     }
 
+    //Applies upgrade to player when picked up.
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "Player" && Input.GetKeyDown(KeyCode.E))

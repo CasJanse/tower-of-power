@@ -18,6 +18,7 @@ public class RangedAttack : MonoBehaviour {
         fireTimer += 1 * Time.deltaTime;
 	}
 
+    //Starts firing at the player when in range
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
@@ -26,6 +27,7 @@ public class RangedAttack : MonoBehaviour {
         }
     }
 
+    //Fire an ice projectile at the target location
     private void Fire(GameObject target)
     {
         if (fireTimer >= fireCooldown)

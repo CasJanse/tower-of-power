@@ -5,43 +5,15 @@ using UnityEngine.UI;
 
 public class PhaseController : MonoBehaviour {
 
-    public bool fightingPhase;
-    public bool upgradePhase;
-    public GameObject enemies;
-    public bool upgradePickedUp;
-    public bool spawning;
-    public int amountOfEnemiesToSpawn;
-    public int enemiesSpawned;
-    public GameObject spawnPoints;
-    private Transform[] spawnPointsList;
-    public GameObject goblin;
-    private GameObject enemyInstance;
-    private Random rnd;
-    private int index;
-    private int randomNr;
-    public Canvas canvas;
-    public GameObject player;
-    public GameObject panel;
+    public bool fightingPhase, upgradePhase, upgradePickedUp, spawning, upgradesPlaced, winScreen;
+    public GameObject enemies, goblin, player, goblinEnemy, goblinSpearEnemy, orcEnemy, upgradeSpawnPoints, spawnPoints;
+    private GameObject enemyInstance, enemyToSpawn;
+    private int index, randomNr, difficultyScore, currentScoreSpawned, difficultyScoreLeft, amountOfEnemiesToSpawn, enemiesSpawned, roundCounter;
     public Text roundText;
-    public int roundCounter;
-    private int difficultyScore;
-    private int currentScoreSpawned;
-    private int difficultyScoreLeft;
-    public GameObject goblinEnemy, goblinSpearEnemy, orcEnemy;
-    private GameObject enemyToSpawn;
-    public GameObject[] upgradeList;
-    public GameObject upgrades;
-    public GameObject upgradeSpawnPoints;
-    private Transform[] upgradeSpawnPointsList;
-    public bool upgradesPlaced;
-    public GameObject[] upgradeText;
-    private bool orcSpawned;
-    public Canvas gameOverCanvas;
-    public Canvas winCanvas;
-    public bool winScreen;
-    private bool won;
-    public Canvas introCanvas;
-    private bool intro;
+    public GameObject[] upgradeList, upgradeText;
+    private Transform[] upgradeSpawnPointsList, spawnPointsList;
+    private bool orcSpawned, won, intro;
+    public Canvas gameOverCanvas, winCanvas, introCanvas;
 
     // Use this for initialization
     void Start () {
@@ -52,22 +24,19 @@ public class PhaseController : MonoBehaviour {
         upgradePhase = false;
         fightingPhase = true;
         amountOfEnemiesToSpawn = 2;
-        rnd = new Random();
         difficultyScore = 10;
         intro = true;
 
+        //Puts all the spawnpoints into a list.
         foreach (Transform spawnPoint in spawnPoints.GetComponentInChildren<Transform>())
         {
             spawnPointsList[index] = spawnPoint;
             index++;
         }
 
-        //foreach (Transform upgrade in upgrades.GetComponentInChildren<Transform>())
-        //{
-        //    upgradeList[index] = upgrade;
-        //    index++;
-        //}
         index = 0;
+
+        //Puts all the upgradepoints into a list.
         foreach (Transform spawnPoint in upgradeSpawnPoints.GetComponentInChildren<Transform>())
         {
             upgradeSpawnPointsList[index] = spawnPoint;
@@ -78,6 +47,7 @@ public class PhaseController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        //Switch to upgradephase
         if (fightingPhase && enemies.transform.childCount <= 0)
         {
             fightingPhase = false;
@@ -85,6 +55,7 @@ public class PhaseController : MonoBehaviour {
             upgradePhase = true;
         }
 
+        //Winscreen
         if (roundCounter == 20 && !won)
         {
             won = true;
@@ -93,6 +64,7 @@ public class PhaseController : MonoBehaviour {
             winScreen = true;
         }
 
+        //Switch to combat phase
         if (upgradePhase && upgradePickedUp)
         {
             upgradePhase = false;
@@ -167,6 +139,7 @@ public class PhaseController : MonoBehaviour {
 
         roundText.text = "Round: " + roundCounter;
 
+        //Determines what enemy can spawn based in a random number and the current round number.
         if (spawning)
         {
             while (currentScoreSpawned < difficultyScore)
@@ -239,12 +212,13 @@ public class PhaseController : MonoBehaviour {
         }
 
         
-
+        //Game Over screen
         if (player.GetComponent<Stats>().HP <= 0)
         {
             gameOverCanvas.gameObject.SetActive(true);
         }
 
+        //Handle input for the winscreen
         if (winScreen)
         {
             if (Input.GetKeyDown(KeyCode.F))

@@ -20,6 +20,7 @@ public class ShotSizeIncrease : MonoBehaviour {
         }
 	}
 
+    //Allows the player to pick up the upgrade and increases the scale of fireballs.
     private void OnTriggerStay2D(Collider2D collision)
     {
 

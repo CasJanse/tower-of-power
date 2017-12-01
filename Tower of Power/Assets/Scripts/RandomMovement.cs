@@ -5,15 +5,10 @@ using UnityEngine;
 public class RandomMovement : MonoBehaviour {
 
     private Vector3 target;
-    public float movementSpeed;
-    public float roamingSpeed;
-    public float followingSpeed;
-    public bool roaming;
-    public bool controlled;
-    public bool attacking;
+    public float movementSpeed, roamingSpeed, followingSpeed;
+    public bool roaming, controlled, attacking;
     public GameObject player;
     private Vector2 moveDirection;
-    public Transform child;
     
 
 	// Use this for initialization
@@ -23,7 +18,6 @@ public class RandomMovement : MonoBehaviour {
         attacking = false;
         target = Random.insideUnitCircle * 5;
         target += transform.position;
-        child = transform.Find("Hearts");
 	}
 	
 	// Update is called once per frame
